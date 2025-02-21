@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 
 import NewsList from "@/components/news-list";
@@ -7,6 +8,7 @@ import {
   getNewsForYear,
   getNewsForYearAndMonth,
 } from "@/lib/news";
+import Error from "next/error";
 
 export default function FilteredNewsPage({ params }) {
   const filter = params.filter;
@@ -31,6 +33,13 @@ export default function FilteredNewsPage({ params }) {
 
   if (news && news.length > 0) {
     newsContent = <NewsList news={news} />;
+  }
+
+  if (
+    (selectedYear && !getAvailableNewsYears().includes(+selectedYear)) ||
+    (selectedMonth && !getAvailableNewsMonths().includes(+selectedMonth))
+  ) {
+    throw new Error("Invalid Filter!");
   }
 
   return (
