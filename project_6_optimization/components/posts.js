@@ -7,11 +7,21 @@ import LikeButton from "./like-icon";
 import { togglePostLikeStatus } from "@/actions/posts";
 import Image from "next/image";
 
+const imageLoader = (config) => {
+  return config.src;
+};
+
 function Post({ post, action }) {
   return (
     <article className="post">
       <div className="post-image">
-        <Image src={post.image} alt={post.title} fill />
+        <Image
+          loader={imageLoader}
+          src={post.image}
+          alt={post.title}
+          fill
+          quality={100}
+        />
       </div>
       <div className="post-content">
         <header>
